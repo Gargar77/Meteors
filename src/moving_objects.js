@@ -16,5 +16,9 @@ MovingObject.prototype.draw = function(ctx) {
     ctx.fill();
 }
 
+MovingObject.prototype.move = function() {
+    this.pos += this.vel;
+}
+
 
   module.exports = MovingObject;
