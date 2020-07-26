@@ -10,13 +10,13 @@ Because we want to make a clear distinction between the constants with the insta
 */
 Game.DIM_X = 400;
 Game.DIM_Y = 400;
-Game.NUM_ASTEROIDS = 20;
+Game.NUM_ASTEROIDS = 10;
 
 Game.prototype.addAsteroids = function() {
     let numAsteroids = Game.NUM_ASTEROIDS;
     while (numAsteroids > 0) {
       let randpos = Util.randomPos(Game.DIM_X,Game.DIM_Y);
-      let asteroid = new Asteroid({pos: randpos});
+      let asteroid = new Asteroid({pos: randpos,game: this});
       this.asteroids.push(asteroid);
       numAsteroids--;
     };
@@ -34,6 +34,22 @@ Game.prototype.moveObjects = function() {
         object.move();
     })
 };
+
+Game.prototype.wrap = function(x,y,r) {
+    let pos = [x,y];
+    
+    if (pos[0] > Game.DIM_X + r) {
+        x = 0;
+    } else if (pos[0] < 0 - r) {
+        x = Game.DIM_X;
+    } else if (pos[1] > Game.DIM_Y + r) {
+        y = 0;
+    }else if (pos[1] < 0 - r) {
+        y = Game.DIM_Y;
+    };       
+
+    return [x,y];
+}
 
 
 

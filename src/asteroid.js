@@ -18,6 +18,7 @@ function Asteroid(options) {
     to save the module to this object!
     indirectly inheriting the constructor attributes
     think of call as using super in Ruby */
+
     MovingObject.call(this,options);
 
     // this will not save any prototype functions however,

@@ -9,12 +9,9 @@ function GameView(game,ctx) {
 GameView.prototype.start = function() {
     let game = this.game;
     let ctx = this.ctx
-    console.log(ctx);
-    console.log(game);
  setInterval(function() {
     game.draw(ctx);
     game.moveObjects();
-    console.log(`${game.asteroids[0].pos}`);
  },20);
 
 }
