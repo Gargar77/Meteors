@@ -1,22 +1,20 @@
 const MovingObject = require("./moving_objects.js");
-const Asteroid = require("./asteroid.js");
+const Game = require("./game");
+const Asteroid = require("./asteroid")
 
 window.MovingObject = MovingObject;
 
 document.addEventListener("DOMContentLoaded", function () {
     var canvas = document.getElementById('game-canvas');
+    canvas.height = 500;
+    canvas.width = 500;
+    
     var ctx = canvas.getContext('2d');
 
+const game = new Game();
 
-
-    const rock = new Asteroid({
-        pos: [30, 30],
-        vel: [10, 10],
-        radius: 5,
-        color: "#00FF00"
-      });
-    
-      rock.draw(ctx);
-     
+game.addAsteroids();
+console.log(game.asteroids);
+game.draw(ctx);
 });
 

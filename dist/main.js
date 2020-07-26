@@ -93,7 +93,18 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// spacerock. it inherits from MovingObject\r\nconst Util = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\");\r\nconst MovingObject = __webpack_require__(/*! ./moving_objects */ \"./src/moving_objects.js\");\r\n\r\nconst DEFAULTS = {\r\n    COLOR: \"#505050\",\r\n    RADIUS: 25,\r\n    SPEED: 5\r\n};\r\n\r\nfunction Asteroid(options) {\r\n    options = options || {};\r\n    options.color = DEFAULTS.COLOR;\r\n    options.pos = options.pos\r\n    options.vel = options.vel || Util.randomVec(DEFAULTS.SPEED);\r\n    /* using call on the MovingObject module will allow us\r\n    to save the module to this object!\r\n    indirectly inheriting the constructor attributes\r\n    think of call as using super in Ruby */\r\n    MovingObject.call(this,options);\r\n\r\n    // this will not save any prototype functions however,\r\n    // we will need to do prototypal inheritance to link these two object's prototypes\r\n};\r\n\r\nUtil.inherits(MovingObject,Asteroid);\r\n\r\nmodule.exports = Asteroid;\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/asteroid.js?");
+eval("// spacerock. it inherits from MovingObject\r\nconst Util = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\");\r\nconst MovingObject = __webpack_require__(/*! ./moving_objects */ \"./src/moving_objects.js\");\r\n\r\nconst DEFAULTS = {\r\n    COLOR: \"#505050\",\r\n    RADIUS: 10,\r\n    SPEED: 5\r\n};\r\n\r\nfunction Asteroid(options) {\r\n    options = options || {};\r\n    options.color = DEFAULTS.COLOR;\r\n    options.pos = options.pos\r\n    options.vel = options.vel || Util.randomVec(DEFAULTS.SPEED);\r\n    options.radius = DEFAULTS.RADIUS;\r\n    /* using call on the MovingObject module will allow us\r\n    to save the module to this object!\r\n    indirectly inheriting the constructor attributes\r\n    think of call as using super in Ruby */\r\n    MovingObject.call(this,options);\r\n\r\n    // this will not save any prototype functions however,\r\n    // we will need to do prototypal inheritance to link these two object's prototypes\r\n};\r\n\r\nUtil.inherits(MovingObject,Asteroid);\r\n\r\nmodule.exports = Asteroid;\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/asteroid.js?");
+
+/***/ }),
+
+/***/ "./src/game.js":
+/*!*********************!*\
+  !*** ./src/game.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const Util = __webpack_require__(/*! ./utils */ \"./src/utils.js\");\r\nconst Asteroid = __webpack_require__(/*! ./asteroid */ \"./src/asteroid.js\");\r\n\r\nfunction Game() {\r\n    this.asteroids = [];\r\n}\r\n\r\n/* these constants are directly placed on the constructor function,\r\nBecause we want to make a clear distinction between the constants with the instace attributes\r\n*/\r\nGame.DIM_X = 400;\r\nGame.DIM_Y = 400;\r\nGame.NUM_ASTEROIDS = 20;\r\n\r\nGame.prototype.addAsteroids = function() {\r\n    let numAsteroids = Game.NUM_ASTEROIDS;\r\n    while (numAsteroids > 0) {\r\n      let randpos = Util.randomPos(Game.DIM_X,Game.DIM_Y);\r\n      let asteroid = new Asteroid({pos: randpos});\r\n      this.asteroids.push(asteroid);\r\n      numAsteroids--;\r\n    };\r\n};\r\n\r\nGame.prototype.draw = function(ctx) {\r\n    ctx.clearRect(0,0,Game.DIM_X,Game.DIM_Y);\r\n    this.asteroids.forEach(function(object) {\r\n        object.draw(ctx);\r\n    })\r\n};\r\n\r\n\r\n\r\nmodule.exports =  Game;\n\n//# sourceURL=webpack:///./src/game.js?");
 
 /***/ }),
 
@@ -104,7 +115,7 @@ eval("// spacerock. it inherits from MovingObject\r\nconst Util = __webpack_requ
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const MovingObject = __webpack_require__(/*! ./moving_objects.js */ \"./src/moving_objects.js\");\r\nconst Asteroid = __webpack_require__(/*! ./asteroid.js */ \"./src/asteroid.js\");\r\n\r\nwindow.MovingObject = MovingObject;\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function () {\r\n    var canvas = document.getElementById('game-canvas');\r\n    var ctx = canvas.getContext('2d');\r\n\r\n\r\n\r\n    const rock = new Asteroid({\r\n        pos: [30, 30],\r\n        vel: [10, 10],\r\n        radius: 5,\r\n        color: \"#00FF00\"\r\n      });\r\n    \r\n      rock.draw(ctx);\r\n     \r\n});\r\n\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const MovingObject = __webpack_require__(/*! ./moving_objects.js */ \"./src/moving_objects.js\");\r\nconst Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\r\nconst Asteroid = __webpack_require__(/*! ./asteroid */ \"./src/asteroid.js\")\r\n\r\nwindow.MovingObject = MovingObject;\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function () {\r\n    var canvas = document.getElementById('game-canvas');\r\n    canvas.height = 500;\r\n    canvas.width = 500;\r\n    \r\n    var ctx = canvas.getContext('2d');\r\n\r\nconst game = new Game();\r\n\r\ngame.addAsteroids();\r\nconsole.log(game.asteroids);\r\ngame.draw(ctx);\r\n});\r\n\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -126,7 +137,7 @@ eval("// Base class for anything that moves.\r\n\r\nfunction MovingObject(option
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// Utility code, especially vector math stuff.\r\n\r\nconst Util = {\r\n    inherits: function(parent,child) {\r\n        let Surrogate = function() {};\r\n        Surrogate.prototype = parent.prototype;\r\n        child.prototype = new Surrogate();\r\n        child.prototype.constructor = child;\r\n    },\r\n\r\n    randomVec(length) {\r\n        const deg = 2 * Math.PI * Math.random();\r\n        return Util.scale([Math.sin(deg), Math.cos(deg)], length);\r\n      },\r\n      // Scale the length of a vector by the given amount.\r\n      scale(vec, m) {\r\n        return [vec[0] * m, vec[1] * m];\r\n      }\r\n};\r\n\r\n\r\nmodule.exports = Util;\n\n//# sourceURL=webpack:///./src/utils.js?");
+eval("// Utility code, especially vector math stuff.\r\n\r\nconst Util = {\r\n    inherits: function(parent,child) {\r\n        let Surrogate = function() {};\r\n        Surrogate.prototype = parent.prototype;\r\n        child.prototype = new Surrogate();\r\n        child.prototype.constructor = child;\r\n    },\r\n\r\n    randomVec(length) {\r\n        const deg = 2 * Math.PI * Math.random();\r\n        return Util.scale([Math.sin(deg), Math.cos(deg)], length);\r\n      },\r\n      // Scale the length of a vector by the given amount.\r\n      scale(vec, m) {\r\n        return [vec[0] * m, vec[1] * m];\r\n      },\r\n\r\n    randomPos(dimX,dimY) {\r\n      let randX = Math.floor(Math.random() * dimX);\r\n      let randY = Math.floor(Math.random() * dimY);\r\n      return [randX,randY];\r\n    }\r\n};\r\n\r\n\r\nmodule.exports = Util;\n\n//# sourceURL=webpack:///./src/utils.js?");
 
 /***/ })
 

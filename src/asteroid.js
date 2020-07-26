@@ -4,7 +4,7 @@ const MovingObject = require("./moving_objects");
 
 const DEFAULTS = {
     COLOR: "#505050",
-    RADIUS: 25,
+    RADIUS: 10,
     SPEED: 5
 };
 
@@ -13,6 +13,7 @@ function Asteroid(options) {
     options.color = DEFAULTS.COLOR;
     options.pos = options.pos
     options.vel = options.vel || Util.randomVec(DEFAULTS.SPEED);
+    options.radius = DEFAULTS.RADIUS;
     /* using call on the MovingObject module will allow us
     to save the module to this object!
     indirectly inheriting the constructor attributes
