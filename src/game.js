@@ -10,13 +10,13 @@ Because we want to make a clear distinction between the constants with the insta
 */
 Game.DIM_X = 400;
 Game.DIM_Y = 400;
-Game.NUM_ASTEROIDS = 10;
+Game.NUM_ASTEROIDS = 3;
 
 Game.prototype.addAsteroids = function() {
     let numAsteroids = Game.NUM_ASTEROIDS;
     while (numAsteroids > 0) {
-      let randpos = Util.randomPos(Game.DIM_X,Game.DIM_Y);
-      let asteroid = new Asteroid({pos: randpos,game: this});
+      let randPos = Util.randomPos(Game.DIM_X,Game.DIM_Y);
+      let asteroid = new Asteroid({pos: randPos,game: this});
       this.asteroids.push(asteroid);
       numAsteroids--;
     };
@@ -50,6 +50,37 @@ Game.prototype.wrap = function(x,y,r) {
 
     return [x,y];
 }
+
+Game.prototype.checkCollisions = function() {
+    let asteroidSet = this.asteroids;
+    let collision;
+    let i = 0;
+    while (i < asteroidSet.length) {
+        let currentAsteroid = asteroidSet[i];
+        asteroidSet.forEach((asteroid)=> {
+            if(
+                (currentAsteroid.isCollidedWith(asteroid)) &&
+                (currentAsteroid !== asteroid)
+            ) {
+                collision = true;
+                return;
+            }
+        });
+        i++;
+    }
+
+    if (collision) {
+        alert("collision!");
+        return true;
+    } 
+    
+    return false;
+}
+
+Game.prototype.step = function() {
+    this.moveObjects();
+    this.checkCollisions();
+};
 
 
 

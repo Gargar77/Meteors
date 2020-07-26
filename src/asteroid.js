@@ -4,7 +4,7 @@ const MovingObject = require("./moving_objects");
 
 const DEFAULTS = {
     COLOR: "#505050",
-    RADIUS: 10,
+    RADIUS: 20,
     SPEED: 3
 };
 
@@ -18,7 +18,6 @@ function Asteroid(options) {
     to save the module to this object!
     indirectly inheriting the constructor attributes
     think of call as using super in Ruby */
-
     MovingObject.call(this,options);
 
     // this will not save any prototype functions however,
