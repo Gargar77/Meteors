@@ -16,4 +16,5 @@ GameView.prototype.start = function() {
 
 }
 
+
 module.exports = GameView;

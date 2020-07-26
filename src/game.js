@@ -10,7 +10,7 @@ Because we want to make a clear distinction between the constants with the insta
 */
 Game.DIM_X = 400;
 Game.DIM_Y = 400;
-Game.NUM_ASTEROIDS = 3;
+Game.NUM_ASTEROIDS = 20;
 
 Game.prototype.addAsteroids = function() {
     let numAsteroids = Game.NUM_ASTEROIDS;
@@ -62,6 +62,7 @@ Game.prototype.checkCollisions = function() {
                 (currentAsteroid.isCollidedWith(asteroid)) &&
                 (currentAsteroid !== asteroid)
             ) {
+                currentAsteroid.collideWith(asteroid);
                 collision = true;
                 return;
             }
@@ -70,7 +71,7 @@ Game.prototype.checkCollisions = function() {
     }
 
     if (collision) {
-        alert("collision!");
+        // alert("collision!");
         return true;
     } 
     
@@ -80,6 +81,12 @@ Game.prototype.checkCollisions = function() {
 Game.prototype.step = function() {
     this.moveObjects();
     this.checkCollisions();
+};
+
+Game.prototype.remove = function(asteroid) {
+    index = this.asteroids.indexOf(asteroid);
+    this.asteroids.splice(index,1);
+    return true;
 };
 
 
