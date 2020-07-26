@@ -5,7 +5,7 @@ const MovingObject = require("./moving_objects");
 const DEFAULTS = {
     COLOR: "#505050",
     RADIUS: 10,
-    SPEED: 5
+    SPEED: 3
 };
 
 function Asteroid(options) {

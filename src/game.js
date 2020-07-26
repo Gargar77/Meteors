@@ -33,7 +33,8 @@ Game.prototype.moveObjects = function() {
     this.asteroids.forEach(function(object) {
         object.move();
     })
-}
+};
+
 
 
 
