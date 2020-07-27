@@ -7,7 +7,7 @@ const Bullet = require("./bullet.js");
 const DEFAULTS = {
     COLOR: "#505050",
     RADIUS: 20,
-    SPEED: 3
+    SPEED: 2
 };
 
 function Asteroid(options) {
@@ -17,6 +17,7 @@ function Asteroid(options) {
     options.vel = options.vel || Util.randomVec(DEFAULTS.SPEED);
     options.radius = DEFAULTS.RADIUS;
     this.isWrappable = true;
+    this.image = document.getElementById('asteroid');
     /* using call on the MovingObject module will allow us
     to save the module to this object!
     indirectly inheriting the constructor attributes
@@ -28,6 +29,11 @@ function Asteroid(options) {
 };
 Util.inherits(MovingObject,Asteroid);
 
+Asteroid.prototype.draw = function(ctx) {
+    let posX = this.pos[0];
+    let posY = this.pos[1];
+    ctx.drawImage(this.image,posX - 35 ,posY - 38,80,80);
+}
 
 Asteroid.prototype.collideWith = function collideWith(otherObject) {
     if(otherObject instanceof Ship) {
@@ -37,6 +43,8 @@ Asteroid.prototype.collideWith = function collideWith(otherObject) {
         this.game.remove(this);
     }
 };
+
+
 
 module.exports = Asteroid;
 

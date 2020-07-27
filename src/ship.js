@@ -9,6 +9,7 @@ function Ship(options) {
     options.vel = [0,0];
     options.radius = Ship.RADIUS;
     options.color = Ship.COLOR;
+    this.image = document.getElementById('spaceship');
     this.isWrappable = true;
     MovingObject.call(this,options);
 }
@@ -18,13 +19,17 @@ Ship.RADIUS = 10;
 Ship.COLOR = "blue";
 Util.inherits(MovingObject,Ship);
 // methods
-
 Ship.prototype.relocate = function() {
     let randPos = this.game.randomPos();
     this.pos = randPos;
 };
 
-
+Ship.prototype.draw = function(ctx) {
+    let posX = this.pos[0];
+    let posY = this.pos[1];
+    
+    ctx.drawImage(this.image,posX - 40 ,posY - 45,80,80);
+}
 
 Ship.prototype.power = function(impulse) {
     this.vel[0] += impulse[0];

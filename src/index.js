@@ -8,12 +8,12 @@ window.MovingObject = MovingObject;
 
 document.addEventListener("DOMContentLoaded", function () {
     var canvas = document.getElementById('game-canvas');
-    canvas.height = 500;
-    canvas.width = 500;
+    canvas.height = 600;
+    canvas.width = 600;
 
     var ctx = canvas.getContext('2d');
-Game.DIM_X = 500;
-Game.DIM_Y = 500;
+Game.DIM_X = 600;
+Game.DIM_Y = 600;
 
 const game = new Game();
 

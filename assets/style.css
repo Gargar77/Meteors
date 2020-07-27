@@ -1,3 +1,41 @@
+html {
+    height: 100%;
+    align-self: center;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
 #game-canvas {
-    border: 1px solid red;
+    border: 1px solid blue;
+    border-radius: 5px;
+    background: url("./galaxy.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#asteroid {
+    height: 100px;
+    width: auto;
+    display: none;
+}
+
+#spaceship {
+    height: 100px;
+    width: auto;
+    display: none;
+}
+
+body {
+    color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(61, 61, 61);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin:0;
 }

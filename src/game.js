@@ -11,9 +11,9 @@ function Game() {
 /* these constants are directly placed on the constructor function,
 Because we want to make a clear distinction between the constants with the instace attributes
 */
-Game.DIM_X = 400;
-Game.DIM_Y = 400;
-Game.NUM_ASTEROIDS = 5;
+// Game.DIM_X = 600;
+// Game.DIM_Y = 600;
+Game.NUM_ASTEROIDS = 15;
 Game.MAX_SHIP_POWER = 5;
 
 Game.prototype.allObjects = function() {
@@ -134,7 +134,6 @@ Game.prototype.step = function() {
     this.moveObjects();
     this.ensureMaxVelocity(Game.MAX_SHIP_POWER);
     this.checkCollisions();
-    console.log(this.bullets)
 };
 
 Game.prototype.remove = function(object) {
