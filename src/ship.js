@@ -11,9 +11,18 @@ function Ship(options) {
 
     MovingObject.call(this,options);
 }
-
 Util.inherits(MovingObject,Ship);
 
+
+Ship.prototype.relocate = function() {
+    console.log(this)
+    let randPos = this.game.randomPos();
+    this.pos = randPos;
+};
+
+Ship.prototype.collideWith = function() {
+    this.relocate();
+};
 Ship.RADIUS = 10;
 Ship.COLOR = "blue";
 

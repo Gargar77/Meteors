@@ -1,6 +1,7 @@
 // spacerock. it inherits from MovingObject
 const Util = require("./utils.js");
 const MovingObject = require("./moving_objects");
+const Ship = require("./ship.js");
 
 const DEFAULTS = {
     COLOR: "#505050",
@@ -23,8 +24,15 @@ function Asteroid(options) {
     // this will not save any prototype functions however,
     // we will need to do prototypal inheritance to link these two object's prototypes
 };
-
 Util.inherits(MovingObject,Asteroid);
+
+Asteroid.prototype.collideWith = function collideWith(otherObject) {
+    if(otherObject instanceof Ship) {
+        console.log(otherObject);
+        otherObject.relocate();
+        return true;
+    }
+};
 
 module.exports = Asteroid;
 

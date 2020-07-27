@@ -48,8 +48,7 @@ MovingObject.prototype.distanceBetweenTwoPos = function(pos1,pos2) {
     return Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
 };
 
-MovingObject.prototype.collideWith = function(otherObject) {
-   
+MovingObject.prototype.collideWith = function() {
 };
 
   module.exports = MovingObject;

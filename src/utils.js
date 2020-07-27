@@ -15,13 +15,7 @@ const Util = {
       // Scale the length of a vector by the given amount.
       scale(vec, m) {
         return [vec[0] * m, vec[1] * m];
-      },
-
-    randomPos(dimX,dimY) {
-      let randX = Math.floor(Math.random() * dimX);
-      let randY = Math.floor(Math.random() * dimY);
-      return [randX,randY];
-    }
+      }
 };
 
 

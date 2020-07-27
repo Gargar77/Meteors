@@ -20,8 +20,9 @@ const game = new Game();
 game.addObjects();
 
 const gameView = new GameView(game,ctx);
-console.log(game);
 gameView.start();
 
 });
+
+
 
