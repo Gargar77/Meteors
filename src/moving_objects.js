@@ -18,9 +18,10 @@ MovingObject.prototype.draw = function(ctx) {
     ctx.fill();
 }
 
-MovingObject.prototype.move = function() {
-    let dx = this.vel[0];
-    let dy = this.vel[1];
+MovingObject.prototype.move = function(delta) {
+    delta = delta || 1;
+    let dx = (this.vel[0] * delta) / 12;
+    let dy = (this.vel[1] * delta) / 12;
     let r = this.radius;
 if(this.isWrappable) {
     let wrappedPos = this.game.wrap(this.pos[0],this.pos[1],r);

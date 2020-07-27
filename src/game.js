@@ -14,7 +14,7 @@ Because we want to make a clear distinction between the constants with the insta
 // Game.DIM_X = 600;
 // Game.DIM_Y = 600;
 Game.NUM_ASTEROIDS = 15;
-Game.MAX_SHIP_POWER = 5;
+Game.MAX_SHIP_POWER = 3;
 
 Game.prototype.allObjects = function() {
     return [].concat(this.ship,this.asteroids,this.bullets);
@@ -87,9 +87,9 @@ Game.prototype.addObjects = function() {
     this.addShip();
 }
 
-Game.prototype.moveObjects = function() {
+Game.prototype.moveObjects = function(delta) {
     this.allObjects().forEach(function(object) {
-        object.move();
+        object.move(delta);
     })
 };
 
@@ -130,8 +130,8 @@ Game.prototype.checkCollisions = function() {
     }
 };
 
-Game.prototype.step = function() {
-    this.moveObjects();
+Game.prototype.step = function(delta) {
+    this.moveObjects(delta);
     this.ensureMaxVelocity(Game.MAX_SHIP_POWER);
     this.checkCollisions();
 };
