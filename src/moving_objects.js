@@ -49,8 +49,7 @@ MovingObject.prototype.distanceBetweenTwoPos = function(pos1,pos2) {
 };
 
 MovingObject.prototype.collideWith = function(otherObject) {
-    this.game.remove(otherObject);
-    this.game.remove(this);
+   
 };
 
   module.exports = MovingObject;

@@ -1,16 +1,27 @@
 const Util = require("./utils");
 const Asteroid = require("./asteroid");
+const Ship = require("./ship");
 
 function Game() {
     this.asteroids = [];
-}
-
+    this.ship = null;
+};
 /* these constants are directly placed on the constructor function,
 Because we want to make a clear distinction between the constants with the instace attributes
 */
 Game.DIM_X = 400;
 Game.DIM_Y = 400;
 Game.NUM_ASTEROIDS = 20;
+
+Game.prototype.allObjects = function() {
+    return [].concat(this.ship,this.asteroids);
+}
+
+Game.prototype.addShip = function() {
+    let randPos = Util.randomPos(Game.DIM_X,Game.DIM_Y);
+    console.log(randPos)
+    this.ship = new Ship({pos: randPos, game: this});
+}
 
 Game.prototype.addAsteroids = function() {
     let numAsteroids = Game.NUM_ASTEROIDS;
@@ -24,13 +35,19 @@ Game.prototype.addAsteroids = function() {
 
 Game.prototype.draw = function(ctx) {
     ctx.clearRect(0,0,Game.DIM_X,Game.DIM_Y);
-    this.asteroids.forEach(function(object) {
+    this.allObjects().forEach(function(object) {
         object.draw(ctx);
     })
 };
 
+Game.prototype.addObjects = function() {
+    this.addAsteroids();
+    this.addShip();
+    console.log(this.ship);
+}
+
 Game.prototype.moveObjects = function() {
-    this.asteroids.forEach(function(object) {
+    this.allObjects().forEach(function(object) {
         object.move();
     })
 };
@@ -52,30 +69,21 @@ Game.prototype.wrap = function(x,y,r) {
 }
 
 Game.prototype.checkCollisions = function() {
-    let asteroidSet = this.asteroids;
-    let collision;
     let i = 0;
-    while (i < asteroidSet.length) {
-        let currentAsteroid = asteroidSet[i];
-        asteroidSet.forEach((asteroid)=> {
+    const objects = this.allObjects();
+    while (i < objects.length) {
+        let currentObject = objects[i];
+        objects.forEach((object)=> {
             if(
-                (currentAsteroid.isCollidedWith(asteroid)) &&
-                (currentAsteroid !== asteroid)
+                (currentObject.isCollidedWith(object)) &&
+                (currentObject !== object)
             ) {
-                currentAsteroid.collideWith(asteroid);
-                collision = true;
-                return;
+                currentObject.collideWith(object);
+                return true;
             }
         });
         i++;
     }
-
-    if (collision) {
-        // alert("collision!");
-        return true;
-    } 
-    
-    return false;
 }
 
 Game.prototype.step = function() {
