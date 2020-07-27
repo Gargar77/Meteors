@@ -22,13 +22,22 @@ MovingObject.prototype.move = function() {
     let dx = this.vel[0];
     let dy = this.vel[1];
     let r = this.radius;
-
+if(this.isWrappable) {
     let wrappedPos = this.game.wrap(this.pos[0],this.pos[1],r);
 
     let x = wrappedPos[0];
     let y = wrappedPos[1];
-    this.pos = [x + dx , y + dy]; 
+    this.pos = [x + dx , y + dy];
+} else {
+    if (this.game.outOfBounds(this)) {
+        this.game.remove(this);
+    }
+    this.pos = [this.pos[0] + dx, this.pos[1] + dy];
 }
+    
+};
+
+
 
 MovingObject.prototype.isCollidedWith= function(otherObject) {
     const pos1 = this.pos;
@@ -50,5 +59,7 @@ MovingObject.prototype.distanceBetweenTwoPos = function(pos1,pos2) {
 
 MovingObject.prototype.collideWith = function() {
 };
+
+
 
   module.exports = MovingObject;

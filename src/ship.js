@@ -2,28 +2,63 @@
 
 const MovingObject = require("./moving_objects");
 const Util = require("./utils");
+const Bullet = require("./bullet");
 
 
 function Ship(options) {   
     options.vel = [0,0];
     options.radius = Ship.RADIUS;
     options.color = Ship.COLOR;
-
+    this.isWrappable = true;
     MovingObject.call(this,options);
 }
-Util.inherits(MovingObject,Ship);
 
+
+Ship.RADIUS = 10;
+Ship.COLOR = "blue";
+Util.inherits(MovingObject,Ship);
+// methods
 
 Ship.prototype.relocate = function() {
-    console.log(this)
     let randPos = this.game.randomPos();
     this.pos = randPos;
 };
 
-Ship.prototype.collideWith = function() {
-    this.relocate();
+
+
+Ship.prototype.power = function(impulse) {
+    this.vel[0] += impulse[0];
+    this.vel[1] += impulse[1];
 };
-Ship.RADIUS = 10;
-Ship.COLOR = "blue";
+
+Ship.prototype.fireBullet = function() {
+    const norm = Util.norm(this.vel);
+
+    if (norm === 0) {
+        // can't fire unless moving
+        return;
+    }
+
+    const relVelocity = Util.scale(
+        Util.dir(this.vel),
+        Bullet.SPEED
+    );
+
+    console.log(relVelocity)
+
+    const bulletVel = [
+        relVelocity[0] + this.vel[0], relVelocity[1] + this.vel[1]
+    ];
+
+    const bullet = new Bullet({
+        pos: this.pos,
+        vel:bulletVel,
+        color: this.color,
+        game: this.game
+    });
+
+    this.game.bullets.push(bullet);
+
+};
 
 module.exports = Ship;

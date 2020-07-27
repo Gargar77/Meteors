@@ -2,6 +2,7 @@
 const Util = require("./utils.js");
 const MovingObject = require("./moving_objects");
 const Ship = require("./ship.js");
+const Bullet = require("./bullet.js");
 
 const DEFAULTS = {
     COLOR: "#505050",
@@ -15,6 +16,7 @@ function Asteroid(options) {
     options.pos = options.pos
     options.vel = options.vel || Util.randomVec(DEFAULTS.SPEED);
     options.radius = DEFAULTS.RADIUS;
+    this.isWrappable = true;
     /* using call on the MovingObject module will allow us
     to save the module to this object!
     indirectly inheriting the constructor attributes
@@ -26,11 +28,13 @@ function Asteroid(options) {
 };
 Util.inherits(MovingObject,Asteroid);
 
+
 Asteroid.prototype.collideWith = function collideWith(otherObject) {
     if(otherObject instanceof Ship) {
-        console.log(otherObject);
         otherObject.relocate();
         return true;
+    } else if (otherObject instanceof Bullet) {
+        this.game.remove(this);
     }
 };
 
