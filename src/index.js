@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.width = 600;
 
     var ctx = canvas.getContext('2d');
-Game.DIM_X = 600;
-Game.DIM_Y = 600;
+Game.DIM_X = canvas.width;
+Game.DIM_Y = canvas.height;
 
 const game = new Game();
 
